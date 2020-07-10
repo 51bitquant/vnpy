@@ -10,7 +10,7 @@ shift 2
 $python -m pip install --upgrade pip setuptools wheel
 
 # Get and build ta-lib
-function install-ta-lib()
+function install_ta_lib()
 {
     pushd /tmp
     curl https://pip.vnpy.com/colletion/ta-lib-0.4.0-src.tar.gz --output ta-lib-0.4.0-src.tar.gz
@@ -21,11 +21,11 @@ function install-ta-lib()
     make install
     popd
 }
-function ta-lib-exists()
+function ta_lib_exists()
 {
     ta-lib-config --libs > /dev/null
 }
-ta-lib-exists || install-ta-lib
+ta_lib_exists || install_ta_lib
 
 # old versions of ta-lib imports numpy in setup.py
 $python -m pip install numpy
