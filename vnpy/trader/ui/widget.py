@@ -10,7 +10,6 @@ from copy import copy
 from tzlocal import get_localzone
 
 from PyQt5 import QtCore, QtGui, QtWidgets, Qt
-import rqdatac
 import numpy as np
 
 import vnpy
@@ -1066,7 +1065,6 @@ class AboutDialog(QtWidgets.QDialog):
             Python - {platform.python_version()}
             PyQt5 - {Qt.PYQT_VERSION_STR}
             Numpy - {np.__version__}
-            RQData - {rqdatac.__version__}
             """
 
         label = QtWidgets.QLabel()

@@ -11,7 +11,6 @@ from vnpy.trader.engine import BaseEngine, MainEngine
 from vnpy.trader.constant import Interval
 from vnpy.trader.utility import extract_vt_symbol
 from vnpy.trader.object import HistoryRequest
-from vnpy.trader.rqdata import rqdata_client
 from vnpy.trader.database import database_manager
 from vnpy.app.cta_strategy import CtaTemplate
 from vnpy.app.cta_strategy.backtesting import BacktestingEngine, OptimizationSetting
@@ -53,16 +52,6 @@ class BacktesterEngine(BaseEngine):
 
         self.load_strategy_class()
         self.write_log("策略文件加载完成")
-
-        self.init_rqdata()
-
-    def init_rqdata(self):
-        """
-        Init RQData client.
-        """
-        result = rqdata_client.init()
-        if result:
-            self.write_log("RQData数据接口初始化成功")
 
     def write_log(self, msg: str):
         """"""
@@ -352,7 +341,6 @@ class BacktesterEngine(BaseEngine):
         end: datetime
     ):
         """
-        Query bar data from RQData.
         """
         self.write_log(f"{vt_symbol}-{interval}开始下载历史数据")
 
@@ -379,10 +367,7 @@ class BacktesterEngine(BaseEngine):
                 data = self.main_engine.query_history(
                     req, contract.gateway_name
                 )
-            # Otherwise use RQData to query data
-            else:
-                data = rqdata_client.query_history(req)
-
+       
             if data:
                 database_manager.save_bar_data(data)
                 self.write_log(f"{vt_symbol}-{interval}历史数据下载完成")
